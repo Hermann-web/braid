@@ -69,32 +69,66 @@ forbidden-content checks are defence in depth after an allowlist.
 
 ## Rights Contract
 
-Keep asset classes separate:
+**This skill does not decide rights, and neither do you.** It gets the release
+mechanically correct and refuses to publish while a rights question is open.
+Licence choice, rights holder, redistribution permission, and deposit policy
+come from the project's own recorded authority, whatever form that takes: a
+governance document, a licence-decision record, a supervisor's written
+instruction. Read it before building. If it does not exist, that is the blocker
+to report, not a gap to fill with a sensible default.
 
-- original repository software uses the owner-recorded software licence;
-- project-authored evidence records use their separately recorded evidence
-  licence;
-- provider payloads retain provider terms and are excluded unless explicit
-  redistribution rights exist;
+Keep asset classes separate, because a single repository-wide licence is almost
+always wrong:
+
+- original repository software takes the owner-recorded software licence;
+- project-authored evidence and documentation take their own recorded licence,
+  which is usually not the software one;
+- provider payloads retain provider terms and stay excluded unless a recorded
+  right permits redistribution;
 - third-party software and publications retain their own terms.
 
-Never infer a licence, rights holder, author, redistribution permission, or DOI
-policy. Require an owner-recorded decision. Put concise public scope text and
-the applicable licence files at the release root. A public rights file may
-state exclusions, but it must not cite a private handbook as authority.
+Stop and consult the recorded authority, rather than reasoning it out, whenever:
+
+- the release carries more than one asset class, and something must decide which
+  licence the top-level licence file states;
+- a rights holder must be named, since the author of a work and the holder of
+  its economic rights are frequently different parties;
+- third-party or provider material would be redistributed rather than pointed
+  at;
+- an archival deposit or DOI is being considered, since whether one is owed is a
+  policy question and not a step in this workflow;
+- the release identity changes and a version number must be chosen.
+
+Put concise public scope text and the applicable licence files at the release
+root, and make one public rights file the authority on which file falls under
+which. A public rights file may state exclusions, but it must never cite,
+name, or link a private governance document as its authority.
 
 ## Workflow
+
+Scale the workflow to the release. Steps 1 to 5, the audit, and the inspection
+are always required, however small the release. The archive, isolated
+installation, and asset-verification steps exist for releases that ship
+software, lockfiles, restricted material, or downloadable archives; a small data
+release with a dependency-free verifier does not need them. Skipping a step
+because the release does not contain the thing that step protects is judgement.
+Skipping one because it is tedious is how private material ships.
 
 1. Read the paper's generated-fact and build contracts.
 2. Define the reader audience and exact support outputs.
 3. Trace the minimal regeneration and verification dependency graph.
 4. Assign every exact path one public role and one rights class.
-5. Record the expected public repository owner, name, remote, asset set, and
-   release version in a typed authority or exact manifest.
+5. Record the expected public repository owner, name, remote, and asset set in a
+   typed authority or exact manifest. Fix the release version once the built
+   projection shows what actually changed, since a version is a conclusion about
+   the change and not an input to it.
 6. Build from a clean committed revision using repository object bytes.
 7. Synchronize into a dedicated target and verify it standalone.
-8. Generate a fresh isolated repository history. Never preserve excluded files
-   in public Git history.
+8. Generate a fresh isolated repository history when no published release is
+   yet cited or immutable. Never preserve excluded files in public Git history.
+   Once any release is cited or immutable, this step is forbidden: preserve the
+   history and correct by a new version instead, because rewriting it breaks the
+   citation that depends on it.
 9. Verify two builds from the same revision have identical checksums.
 10. Verify in an isolated extraction with the declared lockfile and canonical
    commands.
