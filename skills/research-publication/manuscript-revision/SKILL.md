@@ -19,20 +19,26 @@ Use this skill for scientific writing and revision work in a repository.
 
 ## First steps
 
-1. Preserve scientific precision over stylistic polish.
-2. Identify the target journal and rewrite toward its standards, not toward a generic ML venue.
-3. Before editing, locate the manuscript file and any local notes or revision memos.
+1. Read `AGENTS.md` and preserve scientific precision over stylistic polish.
+2. Identify the target journal and rewrite toward its standards, not toward a
+   generic venue or house style.
+3. Before editing, locate the canonical manuscript, bibliography sources,
+   result artifacts, and any local notes or revision memos.
    Read the view's own writing contract when it has one, such as
    `redaction-rules.md`, `submission-guidelines.md`, or a writing plan.
    Those rules win over this skill's generic guidance.
-4. If the manuscript has benchmark tables or figures, treat the paper as a single argument:
+4. Build a claim-evidence map for the central contribution. Each important
+   claim should point to a result, table, figure, citation, or explicit
+   limitation.
+5. If the manuscript has result tables or figures, treat the paper as a single argument:
    - abstract
    - introduction
    - results
    - discussion
    - conclusion
    must all say compatible things.
-5. Check whether the user wants analysis only or direct edits. Default to direct edits when the request is operational.
+6. Check whether the user wants analysis only or direct edits. Default to
+   direct edits when the request is operational.
 
 ## Core workflow
 
@@ -54,136 +60,219 @@ Use this skill for scientific writing and revision work in a repository.
    - Reduce repetitive local commentary around "predicted vs true" plots.
 5. Recheck the terminology after the edit pass.
 
-## Reviewer-facing positioning
+## Positioning and comparison discipline
 
-For selective inverse-problems and scientific-computing journals, make the novelty explicit instead of implying it.
+Make the contribution explicit instead of implying it.
 
-- Add a contribution list near the end of the introduction.
-- If part of the method is inherited from prior work, say so and then state the actual novelty.
-  - Example: `Born implies convolutional structure` may be prior art.
-  - Then state what is new: extension to semi-linear PDEs, constructive architecture design, coupling with weak-form losses, multi-system validation.
-- Name the closest prior work and distinguish against it concretely:
-  - problem class
-  - learning target
-  - role of theory in architecture design
-  - loss formulation
-- If the manuscript is close to one specific line of work, add an explicit paragraph such as `Relation to X (Year)`.
-
-## State-of-the-art comparison discipline
-
-Do not stop at citing related families. State how this paper differs from them.
-
-- For operator-learning papers, distinguish:
-  - architecture derived from inverse-operator structure
-  - generic global operator approximation
-  - parameter identification vs solution-operator learning
-- For PINN-family papers, distinguish:
-  - strong-form residuals
-  - weak-form / VPINN-style enforcement
-  - whether physics enters the loss, the architecture, or both
-- If the user mentions specific families such as `Ying`, `DeepONet`, `FNO`, or `VPINNs`, add an explicit qualitative comparison rather than a passing citation.
-- If only some baselines are available experimentally, keep the comparison qualitative and say that directly.
+- Add a contribution list near the end of the introduction when the journal
+  and manuscript length support one.
+- If part of the method comes from prior work, state that inheritance before
+  identifying the actual extension.
+- Name the closest prior work and distinguish it through concrete dimensions:
+  - scientific problem and assumptions;
+  - data or observation regime;
+  - learning or estimation target;
+  - role of theory or domain knowledge;
+  - method mechanism;
+  - loss or objective;
+  - evaluation protocol.
+- Add a dedicated relation-to-prior-work paragraph when one paper or method
+  family is the real comparison anchor.
+- Keep comparisons qualitative when protocols are not comparable or direct
+  experimental baselines are unavailable.
+- Never describe an unmatched literature number as a head-to-head result.
 
 ## Terminology discipline
 
-Be precise with scientific terms. Do not "simplify" away meaningful distinctions.
+Be precise with scientific terms. Do not simplify away meaningful distinctions.
 
-- `weak-form` and `variational` are related but not interchangeable.
-  - In methods/results, prefer `weak-form residual` or `weak-form loss` when describing the optimized quantity.
-  - In positioning, use `variational formulation`, `variational loss`, or `VPINN-style` when connecting to that literature.
-  - Use both together only when the sentence genuinely needs both ideas.
-- Do not replace `variational` mechanically if the method is explicitly framed through weak/variational enforcement.
-- Avoid calling everything an `architecture` if the point is really the layer organization or model family.
-  - Prefer `network`, `model`, `layer organization`, or `design` when that is what is meant.
+- Introduce an acronym with its full term on first use. If it appears only
+  once or twice, use the full term and omit the acronym.
+- Preserve formal distinctions between related terms. Do not replace a
+  technically precise term with a near-synonym merely for stylistic variety.
+- Avoid calling everything an `architecture` when the point is the model,
+  mechanism, layer organization, or experimental design.
+- Avoid convenience adjectives such as `reduced`, `simplified`, `toy`, or
+  `baseline` unless the manuscript defines the exact scientific sense.
+- Use `proposed` only to identify the authors' contribution. After the first
+  definition, name the method directly.
+- Keep scientific names separate from implementation aliases. Command flags,
+  cache keys, and folder names belong in reproducibility material unless the
+  manuscript needs them to identify an exact artifact.
 
-## Results and discussion strategy
+## Emphasis discipline
 
-For benchmark-heavy papers, do not leave the reader with a sequence of disconnected case studies.
+Make wording, evidence, and structure carry emphasis.
 
-- Group results by scientific family when possible.
-  - Example: linear PDEs, semi-linear PDEs, chaotic dynamics
-- Keep detailed per-benchmark tables if needed, but add one cross-benchmark synthesis table.
-- Replace repeated single-benchmark prediction figures with grouped multi-panel figures when the visual pattern is the same.
-- Use the discussion to extract a few robust cross-benchmark messages.
-- Avoid aggregate metrics across incompatible problems unless they are normalized or rank-based.
+- Avoid bold and italics used only for rhetorical force.
+- Keep italics when notation, taxonomy, species names, or journal style
+  requires them.
+- In comparison tables, bold may mark a best value only when the comparison
+  is fair, local, and defined in the caption.
+- Rewrite a weak sentence instead of using typography to make it look
+  important.
 
-## Models and evaluation discipline
+## Abstract discipline
 
-For method sections, separate three things cleanly:
+Write the abstract as a compressed paper, not a teaser.
 
-- problem equations;
-- model explanations;
-- training and evaluation formulas.
+- State the scientific problem and why it matters.
+- Identify the tested method, data, or experimental setting.
+- Name the relevant comparison target.
+- Report the central result with its metric or qualitative evidence.
+- End with the supported scope or limitation.
+- Remove broad impact language that the manuscript does not demonstrate.
 
-Do not write architecture equations unless the manuscript genuinely studies a
-new mathematical operator. For finite-parameter regressors, prefer:
+## Introduction discipline
 
-- prose explaining what each carrier does;
-- architecture figures placed near that explanation;
-- explicit references to the implementation or benchmark memo when needed.
+Make the introduction earn the research question before presenting the method.
 
-When the repository already contains benchmark-side documentation, reuse it
-instead of improvising a second incompatible description. In this repository,
-that often means:
+- Build the motivation from scientific need to known gap or observation
+  constraint, then state the research question.
+- Define central objects and method families before using abbreviations or
+  specialized cases.
+- Name the closest work instead of hiding it in a long citation list.
+- Make the comparison question explicit for comparative studies.
+- End with concrete contributions, not a generic paper outline.
 
-- benchmark/problem mechanics from project readmes or benchmark-suite notes;
-- model-family positioning from local design memos;
-- loss and metric formulas from the actual trainer and collector code.
+## Claim wording discipline
 
-Evaluation sections must be code-grounded.
+Write claims as evidence-bound scientific statements.
 
-- If training uses normalized MSE, say normalized MSE.
-- If best-model selection uses validation MAE, say validation MAE.
-- If reported metrics come from exported artifacts such as early-window MAE,
-  spike count, or observation activity summaries, define those quantities
-  exactly as written by the code.
-- Do not describe a metric family more broadly than the current implementation
+- State the condition, compared methods or groups, metric, and direction of
+  the result when they matter.
+- Prefer `has lower error under condition X` to competition language such as
+  `wins`, `beats`, or `dominates`.
+- Distinguish observation, association, estimation, and causal evidence.
+- Match every claim to the actual aggregation, selection rule, uncertainty
+  estimate, and evaluation surface.
+- Do not turn a result from one regime, subgroup, or benchmark into a general
+  property of the method.
+
+## Citation discipline
+
+Use citations to support concrete statements.
+
+- Attach each citation cluster to the claim it supports.
+- Separate citation roles when a paragraph covers application motivation,
+  scientific background, method precedent, and benchmark precedent.
+- Name the closest prior work in prose.
+- Verify citation metadata and key resolution through the repository's
+  bibliography workflow.
+- Do not cite a review as the primary source when the original result is
+  available and is the claim being discussed.
+
+## Table discipline
+
+Give every table one job.
+
+- State what rows, columns, groups, and summary statistics mean.
+- Put units and aggregation rules in headers or captions.
+- Highlight best values only for comparable methods evaluated under the same
+  protocol.
+- Explain the intended comparison in the surrounding prose.
+- Add a synthesis table when many detailed tables obscure the main pattern.
+
+## Equation discipline
+
+Include equations when they clarify the scientific object, method, or
+evaluation logic.
+
+- Define every symbol, operator, domain, condition, and parameter near first
+  use.
+- Keep scalar, vector, matrix, and tensor notation consistent.
+- State which quantities are observed, fixed, estimated, or learned.
+- Number equations that later text cites. Leave purely local display math
+  unnumbered.
+- Refer back to an equation only when it carries part of the argument.
+
+## Paragraph discipline
+
+Give each paragraph one main job, such as motivating a question, defining an
+object, comparing results, explaining a figure, or setting a limitation.
+Split paragraphs that mix several of these jobs, and use short transitions
+between distinct parts of the argument.
+
+## Results and discussion discipline
+
+Do not leave the reader with disconnected case studies or a scoreboard.
+
+- Explain why each experiment, cohort, benchmark, or case is scientifically
+  necessary before reporting that it performs well.
+- State the tested hypothesis and the quantities being evaluated.
+- Group results by scientific question or problem family when useful.
+- Keep detailed local results, but provide a cross-result synthesis when the
+  central pattern is otherwise hard to recover.
+- Avoid aggregate metrics across incompatible tasks unless normalization or
+  ranking makes the aggregation defensible.
+- Separate robust trends from subgroup-specific or protocol-specific effects.
+- Use the discussion to explain mechanisms, controls, failures, and why
+  effects differ across conditions.
+- Ask what the strongest competing explanation still accounts for better.
+- State which conclusions survive stricter metrics, controls, or follow-up
+  analyses.
+
+If several maintained manuscript variants share stable method text, use the
+repository's existing include or shared-source mechanism. Keep venue-specific
+framing and result subsets separate. Rebuild every affected variant.
+
+## Methods and evaluation discipline
+
+Separate the scientific problem, method explanation, training or fitting
+procedure, and evaluation formulas.
+
+- Put scientific choices in the method section: formulation, assumptions,
+  observation contract, target definition, regularization, and method
+  rationale.
+- Put implementation details in the protocol when they affect evidence:
+  sample counts, seeds, discretization, solver, time step, split policy,
+  selection rule, and metric aggregation.
+- Do not let internal class names, modes, or configuration keys define the
+  scientific contribution.
+- Name which quantities are learned or estimated and which are fixed by the
+  experimental setup.
+- Reuse code-grounded repository documentation instead of improvising a second
+  incompatible method description.
+
+Evaluation sections must match the implementation and persisted artifacts.
+
+- Define every reported metric, unit, aggregation rule, and uncertainty
+  summary.
+- State how the best model, checkpoint, fit, or hypothesis was selected.
+- Distinguish validation selection from final test reporting.
+- Report exclusions, filtering, missing-data handling, and subgroup formation
+  when they affect interpretation.
+- Do not describe a metric family more broadly than the implementation
   supports.
 
-## Figure placement discipline
+For solver-backed studies, report enough of the forward numerical problem to
+interpret the inverse or learned result:
 
-Figures should support the text flow rather than interrupt it.
+- solver and version when relevant;
+- domain, grid or mesh, and boundary conditions;
+- time discretization and internal step if it differs from stored output;
+- tolerances or convergence criteria;
+- distinction between the full simulated state and the observations supplied
+  to the method.
 
-- Introduce every figure in prose before the figure environment appears.
-  - The reader should know why the figure is coming before they see it.
-- Refer to the figure explicitly in the surrounding sentences, not only in the
-  caption.
-- Keep interpretation integrated with the paragraph logic:
-  - introduce the figure,
-  - place the figure,
-  - continue the prose with the relevant reading.
-- Avoid isolated patterns such as:
-  - one sentence,
-  - a figure,
-  - then a disconnected interpretation block.
-  Prefer the style where the figure is one piece of an already ongoing
-  argument.
+## Figure discipline
 
-Anchoring and sizing are one decision, not two. When the template allows
-it, prefer `\usepackage{float}` with `[H]` so a figure stays at its first
-substantial discussion, and then size that figure so anchoring it does
-not push a large white gap onto the page. A figure small enough to sit
-inside the running argument is what makes `[H]` safe; an oversized
-anchored figure is what creates the gaps.
+Figures must be locally understandable and support the surrounding argument.
 
-- Place each figure close to its first meaningful discussion, and keep it
-  small enough to stay there without breaking the page.
-- Size figures for reading, not for maximal occupancy:
-  - if a figure remains legible at smaller width, reduce it;
-  - avoid near-full-width figures unless the visual content genuinely requires
-    that width.
-- In long manuscripts, a smaller figure with continuous explanatory text is
-  usually better than a large figure isolated by whitespace.
-- Captions should explain the scientific reading, but the figure footprint
-  should stay compact enough that the page still reads like prose.
-- If a figure genuinely needs a large footprint and cannot be reduced,
-  let it float to the top or bottom of the page rather than forcing `[H]`
-  and stranding half a page of whitespace.
-- With anchored figures, keep the prose pattern explicit: introduce the
-  figure, place it, then continue the same argument immediately after it.
-  Do not leave the interpretation several paragraphs later.
-- Check the rendered pages after changing figure size or placement. Gaps
-  and stranded floats are only visible in the PDF.
+- Introduce each figure in prose before it appears.
+- State the horizontal and vertical axes, units, panels, colors or markers,
+  aggregation rule, and important filtering.
+- Make captions describe both the visual structure and the scientific reading.
+- For architecture or workflow figures, state the input and output contract.
+- Do not assume the reader remembers a filter or matrix definition from an
+  earlier figure.
+- Place the figure near its first substantial discussion.
+- Follow the journal template's float policy. Use forced placement only when
+  necessary and only after checking the rendered page.
+- Size for legibility, not maximal occupancy. Avoid oversized figures that
+  strand text or create large white gaps.
+- Inspect the rendered PDF for clipping, overlap, unreadable labels, float
+  order, and page balance.
 
 ## Claims checklist
 
@@ -197,25 +286,22 @@ Before finalizing, verify these questions:
 - Does the manuscript separate architectural conclusions from loss-function conclusions?
 - Does the paper say when the method fails or when its assumptions stop being credible?
 
-## Standalone framing discipline
+## Claim sequencing and standalone framing
 
-Write for a reader who has not seen the internal experiment history.
+Write for readers who have not seen the internal experiment history.
 
-- State the supported claim directly before discussing its scope.
-- Prefer scope-first wording such as:
-  - `the method is supported in timestamp-jittered event-trace settings`
-  - `the strongest evidence appears in low-data and low-budget regimes`
-- Avoid internal-opposition phrasing such as:
-  - `this kills the broad claim`
-  - `the method is not general`
-  - `the reader should not think X`
-  unless the manuscript is explicitly criticizing a prior published claim.
-- When limitations matter, express them as boundaries of the present evidence:
-  - `the current evidence is concentrated on ...`
-  - `the present study establishes ... and leaves ... for future work`
-  rather than as debate-style negations.
-- Result sections should read like a complete argument on their own, not like a
-  response to an unseen previous draft.
+- State the supported finding before discussing its boundary.
+- Explain why the tested setting is scientifically meaningful.
+- State the limitation once, precisely, after the result is clear.
+- Do not lead an abstract or result paragraph with repeated defensive
+  constructions such as `we do not claim` or `the result is only`.
+- Do not hide limitations. Sequencing is not permission to bury them.
+- If a comparison is not protocol-matched, report each result accurately and
+  discuss comparability without presenting a direct contest.
+- Avoid ending the main result with a future-work sentence that makes the
+  present study sound unfinished.
+- Keep result sections readable as a complete argument rather than a response
+  to an unseen earlier draft.
 
 ## External report triage
 
