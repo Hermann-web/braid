@@ -1,5 +1,7 @@
 # braid
 
+![Braid: research and engineering woven into reusable agent skills](assets/braid-banner.png)
+
 Two strands. One skill collection.
 
 `braid` is an open-source collection of reusable Agent Skills for software
